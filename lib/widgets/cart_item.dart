@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop_app/providers/cart.dart';
 import 'package:provider/provider.dart';
-
-import '../providers/cart.dart';
 
 class CartItem extends StatelessWidget {
   final String id;
@@ -10,7 +9,13 @@ class CartItem extends StatelessWidget {
   final int quantity;
   final String title;
 
-  CartItem(this.id, this.productId, this.price, this.quantity, this.title);
+  CartItem(
+    this.id,
+    this.productId,
+    this.price,
+    this.quantity,
+    this.title,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class CartItem extends StatelessWidget {
       key: ValueKey(id),
       direction: DismissDirection.endToStart,
       background: Container(
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
         child: Icon(
           Icons.delete,
           color: Colors.white,
@@ -30,24 +35,30 @@ class CartItem extends StatelessWidget {
       ),
       confirmDismiss: (direction) {
         return showDialog(
-            context: context,
-            builder: (innerContext) => AlertDialog(
-              title: Text('Are you sure!'),
-              content: Text('Do you want to remove the cart item?'),
-              actions: <Widget>[
-                FlatButton(child: Text('No'), onPressed: (){
+          context: context,
+          builder: (innerContext) => AlertDialog(
+            title: Text('Are you sure!'),
+            content: Text('Do you want to remove the cart item?'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('No'),
+                onPressed: () {
                   Navigator.of(innerContext).pop(false);
-                },),
-                FlatButton(child: Text("Yes"), onPressed: (){
+                },
+              ),
+              TextButton(
+                child: Text("Yes"),
+                onPressed: () {
                   Navigator.of(innerContext).pop(true);
-                },)
-              ],
-            ),
+                },
+              )
+            ],
+          ),
         );
       },
       onDismissed: (direction) {
         // if(direction == DismissDirection.endToStart) {
-          Provider.of<Cart>(context, listen: false).removeItem(productId);
+        Provider.of<Cart>(context, listen: false).removeItem(productId);
         // }
       },
       child: Card(
