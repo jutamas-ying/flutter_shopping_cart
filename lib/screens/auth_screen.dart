@@ -67,7 +67,7 @@ class AuthScreen extends StatelessWidget {
                       child: Text(
                         'MyShop',
                         style: TextStyle(
-                          color: Theme.of(context).accentTextTheme.title.color,
+                          color: Theme.of(context).colorScheme.secondary,
                           fontSize: 50,
                           fontFamily: 'Anton',
                           fontWeight: FontWeight.normal,
@@ -91,7 +91,7 @@ class AuthScreen extends StatelessWidget {
 
 class AuthCard extends StatefulWidget {
   const AuthCard({
-    Key key,
+    required Key key,
   }) : super(key: key);
 
   @override
