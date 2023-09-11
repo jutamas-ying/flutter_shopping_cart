@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
@@ -10,10 +10,9 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productId = ModalRoute.of(context).settings.arguments as String;
+    final productId = ModalRoute.of(context)?.settings.arguments as String;
 
-    final loadedProduct =
-        Provider.of<Products>(context, listen: false).findById(productId);
+    final loadedProduct = Provider.of<Products>(context, listen: false).findById(productId);
 
     return Scaffold(
       // appBar: AppBar(title: Text(loadedProduct.title),),
@@ -22,9 +21,9 @@ class ProductDetailScreen extends StatelessWidget {
           SliverAppBar(
             expandedHeight: 300,
             pinned: true,
-
             flexibleSpace: FlexibleSpaceBar(
-              title: Container(child: Text(loadedProduct.title),
+              title: Container(
+                child: Text(loadedProduct.title),
               ),
               background: Hero(
                 tag: loadedProduct.id,
@@ -55,8 +54,7 @@ class ProductDetailScreen extends StatelessWidget {
                     loadedProduct.description,
                     textAlign: TextAlign.center,
                     softWrap: true,
-                  )
-              ),
+                  )),
               SizedBox(
                 height: 800,
               ),

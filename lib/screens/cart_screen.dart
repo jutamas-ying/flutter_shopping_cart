@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop_app/providers/orders.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show Cart;
 import '../widgets/cart_item.dart';
-
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
@@ -27,12 +26,15 @@ class CartScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text("Total", style: TextStyle(fontSize: 20),),
+                    Text(
+                      "Total",
+                      style: TextStyle(fontSize: 20),
+                    ),
                     Spacer(),
                     Chip(
                       label: Text(
                         '\$${cart.totalAmount}',
-                        style: TextStyle(color: Theme.of(context).primaryTextTheme.headline6.color),
+                        style: TextStyle(color: Theme.of(context).primaryTextTheme.titleLarge!.color),
                       ),
                       backgroundColor: Theme.of(context).primaryColor,
                     ),
@@ -41,29 +43,24 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Expanded(
               child: ListView.builder(
-                itemBuilder: (_, index) => CartItem(
-                    cart.items.values.toList()[index].id,
-                    cart.items.keys.toList()[index],
-                    cart.items.values.toList()[index].price,
-                    cart.items.values.toList()[index].quantity,
-                    cart.items.values.toList()[index].title
-                ),
+                itemBuilder: (_, index) => CartItem(cart.items.values.toList()[index].id, cart.items.keys.toList()[index], cart.items.values.toList()[index].price, cart.items.values.toList()[index].quantity, cart.items.values.toList()[index].title),
                 itemCount: cart.items.length,
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 }
 
 class OrderButton extends StatefulWidget {
   const OrderButton({
-    Key key,
-    @required this.cart,
+    Key? key,
+    required this.cart,
   }) : super(key: key);
 
   final Cart cart;
@@ -76,22 +73,21 @@ class _OrderButtonState extends State<OrderButton> {
   var _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       child: _isLoading ? CircularProgressIndicator() : Text("ORDER NOW"),
-      onPressed: (widget.cart.totalAmount <= 0 || _isLoading)? null : () async {
-        setState(() {
-          _isLoading = true;
-        });
-        await Provider.of<Orders>(context, listen: false).addOrder(
-            widget.cart.items.values.toList(),
-            widget.cart.totalAmount
-        );
-        setState(() {
-          _isLoading = false;
-        });
-        widget.cart.clearCart();
-      },
-      textColor: Theme.of(context).primaryColor,
+      onPressed: (widget.cart.totalAmount <= 0 || _isLoading)
+          ? null
+          : () async {
+              setState(() {
+                _isLoading = true;
+              });
+              await Provider.of<Orders>(context, listen: false).addOrder(widget.cart.items.values.toList(), widget.cart.totalAmount);
+              setState(() {
+                _isLoading = false;
+              });
+              widget.cart.clearCart();
+            },
+      // textColor: Theme.of(context).primaryColor,
     );
   }
 }

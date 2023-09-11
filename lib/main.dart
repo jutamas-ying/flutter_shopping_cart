@@ -22,9 +22,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var create2 = null;
-    var create3 = null;
-
     // return MultiProvider(
     //   // Make the necessary providers available for the app
     //   providers: [

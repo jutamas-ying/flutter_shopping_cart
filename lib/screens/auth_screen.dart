@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop_app/models/http_exception.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/auth.dart';
+//import '../providers/auth.dart';
 
 enum AuthMode {
   Signup,
@@ -77,7 +77,8 @@ class AuthScreen extends StatelessWidget {
                   ),
                   Flexible(
                     flex: deviceSize.width > 600 ? 2 : 1,
-                    child: AuthCard(),
+                    child: Center(),
+                    // child:  AuthCard(),
                   ),
                 ],
               ),
@@ -131,7 +132,7 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
         title: Text("And error occurred!"),
         content: Text(message),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text("Okay"),
             onPressed: () => Navigator.of(ctx).pop(),
           ),
@@ -141,11 +142,11 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
   }
 
   Future<void> _submit() async {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       // Invalid!
       return;
     }
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
     setState(() {
       _isLoading = true;
     });
@@ -220,14 +221,13 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
                   decoration: InputDecoration(labelText: 'E-Mail'),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value.isEmpty || !value.contains('@')) {
+                    if (value!.isEmpty || !value.contains('@')) {
                       return 'Invalid email!';
                     }
                     return null;
-                    return null;
                   },
                   onSaved: (value) {
-                    _authData['email'] = value;
+                    _authData['email'] = value!;
                   },
                 ),
                 TextFormField(
@@ -235,12 +235,13 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
-                    if (value.isEmpty || value.length < 5) {
+                    if (value!.isEmpty || value.length < 5) {
                       return 'Password is too short!';
                     }
+                    return null;
                   },
                   onSaved: (value) {
-                    _authData['password'] = value;
+                    _authData['password'] = value!;
                   },
                 ),
                 AnimatedContainer(
@@ -260,6 +261,7 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
                                 if (value != _passwordController.text) {
                                   return 'Passwords do not match!';
                                 }
+                                return null;
                               }
                             : null,
                       ),
@@ -272,22 +274,22 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
                 if (_isLoading)
                   CircularProgressIndicator()
                 else
-                  RaisedButton(
+                  ElevatedButton(
                     child: Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
                     onPressed: _submit,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Theme.of(context).primaryTextTheme.button.color,
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    // padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                    // color: Theme.of(context).primaryColor,
+                    // textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
-                FlatButton(
+                TextButton(
                   child: Text('${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                   onPressed: _switchAuthMode,
-                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  textColor: Theme.of(context).primaryColor,
+                  // padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                  // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  // textColor: Theme.of(context).primaryColor,
                 ),
               ],
             ),
@@ -296,4 +298,16 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
       ),
     );
   }
+}
+
+class Auth {
+  String get token => '';
+
+  String get userId => '';
+
+  login(String? authData, String? authData2) {}
+
+  signup(String? authData, String? authData2) {}
+
+  void logout() {}
 }
