@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop_app/providers/auth.dart';
+//import 'package:flutter_shop_app/providers/auth.dart';
 import 'package:flutter_shop_app/providers/cart.dart';
 import 'package:flutter_shop_app/providers/product.dart';
+import 'package:flutter_shop_app/screens/auth_screen.dart';
 import 'package:flutter_shop_app/screens/product_detail_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,7 @@ class ProductItem extends StatelessWidget {
           backgroundColor: Colors.black,
           leading: Consumer<Product>(
             builder: (_, product, child) => IconButton(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               icon: Icon(product.isFavorite ? Icons.favorite : Icons.favorite_border),
               onPressed: () {
                 product.toggleFavorite(authData.token, authData.userId);
@@ -53,7 +54,7 @@ class ProductItem extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
               cart.addItem(product.id, product.price, product.title);
