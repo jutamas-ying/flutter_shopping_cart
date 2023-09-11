@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
     //   child: Consumer<Auth>(
     //     builder: (ctx, auth, _) {
     return MaterialApp(
-      title: 'MyShop',
+      title: 'MyShop by YingYing',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.purple,
